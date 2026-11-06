@@ -1,0 +1,24 @@
+name: V3 staging membership email jobs
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: membership-email-jobs
+  cancel-in-progress: false
+jobs:
+  deliver:
+    if: github.repository == 'Mustymustapha12/FEDMOGA_V3'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      SCHEDULER_URL: ${{ secrets.V3_STAGING_APP_URL }}
+      JOB_TOKEN: ${{ secrets.V3_STAGING_JOB_SECRET }}
+    steps:
+      - name: Process reminders and queued mail
+        run: |
+          test -n "$SCHEDULER_URL" && test -n "$JOB_TOKEN"
+          curl --fail --silent --show-error --max-time 110 \
+            -X POST -H "Authorization: Bearer $JOB_TOKEN" \
+            "$SCHEDULER_URL/api/jobs/run"
