@@ -1,0 +1,48 @@
+name: V3 isolated checks
+on:
+  push:
+    branches: [main, development/v3]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: local-disposable-test-only
+          MARIADB_DATABASE: fedmoga_v3_test
+          MARIADB_USER: fedmoga_test
+          MARIADB_PASSWORD: local-disposable-test-only
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      APP_URL: https://fedmoga.example
+      DB_HOST: 127.0.0.1
+      DB_PORT: '3306'
+      DB_NAME: fedmoga_v3_test
+      DB_USER: fedmoga_test
+      DB_PASSWORD: local-disposable-test-only
+      SUPER_ADMIN_EMAIL: superadmin@example.com
+      SUPER_ADMIN_PASSWORD: Disposable-test-password-123
+      FEDMOGA_ENCRYPTION_KEY: '3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a'
+      ALLOW_LIVE_PAYMENTS: 'false'
+      JOB_SECRET: local-disposable-scheduler-secret-123456789
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run check:format
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run test:integration
