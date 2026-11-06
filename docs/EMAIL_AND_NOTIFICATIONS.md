@@ -13,4 +13,4 @@ Staging: set FEDMOGA_ENV=staging, isolated SMTP credentials and STAGING_EMAIL_SI
 
 POST /api/jobs/run requires Bearer JOB_SECRET of at least 32 characters. Configure only the V3 scheduler origin/token after isolation checks. Do not copy V2 Actions secrets.
 
-The V3 repository scheduler uses GitHub Actions secrets V3_STAGING_APP_URL and V3_STAGING_JOB_SECRET (runtime JOB_SECRET stays unchanged). The workflow checks the repository name. V2 workflow/secrets are not changed. V3 CI uses a disposable MariaDB service and scripts/test-integration.mjs; the hosted CI run is pending publication.
+The V3 repository scheduler uses GitHub Actions secrets V3_STAGING_APP_URL and V3_STAGING_JOB_SECRET (runtime JOB_SECRET stays unchanged). The workflow checks the repository name. V2 workflow/secrets are not changed. V3 CI uses a disposable MariaDB service and scripts/test-integration.mjs; GitHub CI is enabled on development/v3 and pull requests; inspect the Actions run for current results.

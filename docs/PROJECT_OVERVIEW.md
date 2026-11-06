@@ -5,4 +5,4 @@ V3 is a controlled extension of V2, preserving the green branding, logo, public 
 
 Users: public applicants, activated Members, Admins and Super Admins. Existing features include configurable registration forms, Paystack test/live modes, verified payment continuation/recovery, previous-payment approval/import, account activation/reset, manual dues, CSV reports, job processing and test-data cleanup.
 
-Repository source is V2 commit 2b3ca6ddbabbb8b6fd4438596fa0dd8a38f7f4b5. The target is https://github.com/Mustymustapha12/FEDMOGA_V3 on development/v3. Remote publication and hosted staging require operator access. No V2 production connection has been accessed or modified.
+Repository source is V2 commit 2b3ca6ddbabbb8b6fd4438596fa0dd8a38f7f4b5. The target is https://github.com/Mustymustapha12/FEDMOGA_V3 on development/v3. The source is published on development/v3 with draft PR #1. Hosted staging still requires operator access. No V2 production connection has been accessed or modified.
